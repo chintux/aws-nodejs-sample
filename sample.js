@@ -18,19 +18,22 @@
 var AWS = require('aws-sdk');
 var uuid = require('node-uuid');
 
-// Create an S3 client
-var s3 = new AWS.S3();
+var mms = new AWS.MarketplaceMetering();
+
 
 // Create a bucket and upload something into it
 var bucketName = 'node-sdk-sample-' + uuid.v4();
 var keyName = 'hello_world.txt';
 
-s3.createBucket({Bucket: bucketName}, function() {
-  var params = {Bucket: bucketName, Key: keyName, Body: 'Hello World!'};
-  s3.putObject(params, function(err, data) {
-    if (err)
-      console.log(err)
-    else
-      console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-  });
+
+var params = {
+  DryRun: false, /* required */
+  ProductCode: '72m8mmj6t2dgb8dfru8o3ancp', /* required */
+  Timestamp: new Date, /* required */
+  UsageDimension: 'AdminUser', /* required */
+  UsageQuantity: 1000005 /* required */
+};
+marketplacemetering.meterUsage(params, function(err, data) {
+  if (err) console.log(err, err.stack); // an error occurred
+  else     console.log(data);           // successful response
 });
