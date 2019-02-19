@@ -18,7 +18,7 @@
 var AWS = require('aws-sdk');
 var uuid = require('node-uuid');
 
-var marketplacemetering = new AWS.MarketplaceMetering();
+var marketplacemetering = new AWS.MarketplaceMetering({region: 'us-east-1'});
 
 
 // Create a bucket and upload something into it
